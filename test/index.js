@@ -72,6 +72,12 @@ test('get-dirs', t => {
     t.end()
   })
 
+  t.test('it will throw an error if something other than a string or RegEx is passed into exclusion array', t => {
+    const exclude = [1, 2, 3]
+    t.throws(getDirs.bind(null, testDir, exclude), Error)
+    t.end()
+  })
+
   t.test('it will ignore any directories that match a passed-in RegEx literal', t => {
     t.fail()
     t.end()
