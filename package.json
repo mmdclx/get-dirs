@@ -4,6 +4,7 @@
   "description": "npm package to recursively get all directories and subdirectories of a path. Allows for exclusions (eg 'node_modules')",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon ./test/index.js -x 'npm test'",
     "test": "node ./test/index.js | faucet"
   },
   "repository": {
