@@ -78,8 +78,4 @@ test('get-dirs', t => {
     t.end()
   })
 
-  t.test('it will ignore any directories that match a passed-in RegEx literal', t => {
-    t.fail()
-    t.end()
-  })
 })
