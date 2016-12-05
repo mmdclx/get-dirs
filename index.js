@@ -10,7 +10,13 @@ module.exports = function getDirs(rootDir, exclude) {
       throw new Error('exclude arg must be an array of strings to exclude from output')
     }
     exclude = exclude.map(v => {
-      return new RegExp(v, 'i')
+      if(typeof v === 'string') {
+        return new RegExp(v, 'i')
+      } else if(v instanceof RegExp) {
+        return v
+      } else {
+        throw new Error('Only strings or RegExp objects are allowed in exclude array. There is a problem with value: ' + v)
+      }
     })
   }
 
