@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = function getDirs(rootDir, exclude) {
+
   if(isUndefined(rootDir)) {
     throw new Error('Please provide a root directory.')
   }
@@ -15,7 +16,7 @@ module.exports = function getDirs(rootDir, exclude) {
       } else if(v instanceof RegExp) {
         return v
       } else {
-        throw new Error('Only strings or RegExp objects are allowed in exclude array. There is a problem with value: ' + v)
+        throw new Error('Only strings or RegExp objects are allowed in exclude array. There is a problem with value: ' + v + ', which is an instance of: ' + Object.getPrototypeOf(v))
       }
     })
   }
