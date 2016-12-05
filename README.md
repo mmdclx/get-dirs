@@ -5,12 +5,13 @@ get-dirs is an npm package to recursively get all directories and subdirectories
 get-dirs will synchronously gather all sub-directories, and return an array.
 
 ## Usage
+```javascript
+const getDirs = require('get-dirs')
 
-    const getDirs = require('get-dirs')
+const exclusions = ['node_modules']
+const dirs = getDirs(__dirname, exclusions)
 
-    const exclusions = ['node_modules']
-    const dirs = getDirs(__dirname, exclusions)
-
-    console.log(dirs)
+console.log(dirs)
+```
 
 Tested on Mac OSX only so far.
