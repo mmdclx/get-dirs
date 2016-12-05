@@ -55,7 +55,20 @@ test('get-dirs', t => {
   })
 
   t.test('it will ignore any directories that match a passed-in RegEx object', t => {
-    t.fail()
+    fs.mkdirSync(`${testDir}/.secretFolder`)
+    fs.mkdirSync(`${testDir}/test.folder`)
+
+    const exclude = [new RegExp('\/\.')]
+    const dirs = getDirs(testDir, exclude)
+    t.deepEqual(dirs, [
+      `${testDir}/folderA`,
+      `${testDir}/folderA/folderAA`,
+      `${testDir}/folderB`,
+      `${testDir}/test.folder`
+    ])
+
+    fs.rmdirSync(`${testDir}/.secretFolder`)
+    fs.rmdirSync(`${testDir}/test.folder`)
     t.end()
   })
 
