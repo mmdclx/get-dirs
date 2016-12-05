@@ -8,8 +8,10 @@ get-dirs will synchronously gather all sub-directories, and return an array.
 ```javascript
 const getDirs = require('get-dirs')
 
-const exclusions = ['node_modules', '.git'] // optional arg
-const dirs = getDirs(__dirname, exclusions)
+const matchDotFolders = /^\.\w+|\/\./ // RegExp to exclude any root or nested .dotFolders/
+const exclusions = ['node_modules', matchDotFolders]
+
+const dirs = getDirs(__dirname, exclusions)  // exclusions is an optional arg
 
 console.log(dirs)
 ```
