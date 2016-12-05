@@ -18,6 +18,10 @@ console.log(dirs)
 
 Tested on Mac OSX only so far.
 
+**note**: running the above example in the node REPL will cause an error — the `get-dirs`
+module will claim that the RegExp is not actually an `instanceof RegExp`. I don't know why,
+but it will work fine run inside a `js` file. If anyone knows why please feel free to enlighten me.
+
 ## Run unit tests
 ```bash
 $ npm test
