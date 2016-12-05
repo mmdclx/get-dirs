@@ -31,4 +31,26 @@ test('get-dirs', t => {
     t.end()
   })
 
+  t.test('it will ignore any directories that match the naming passed to exclude arg', t => {
+
+    let excludeDir = ['folderAA']
+    let dirs = getDirs(testDir, excludeDir)
+    t.deepEqual(dirs, [
+      `${testDir}/folderA`,
+      `${testDir}/folderB`
+    ])
+
+    excludeDir = ['folderAA', 'folderB']
+    dirs = getDirs(testDir, excludeDir)
+    t.deepEqual(dirs, [
+      `${testDir}/folderA`
+    ])
+
+    excludeDir = ['fold']
+    dirs = getDirs(testDir, excludeDir)
+    t.deepEqual(dirs, [])
+
+    t.end()
+
+  })
 })
