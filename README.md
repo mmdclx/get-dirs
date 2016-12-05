@@ -15,3 +15,8 @@ console.log(dirs)
 ```
 
 Tested on Mac OSX only so far.
+
+## Run unit tests
+```javascript
+npm test
+```
