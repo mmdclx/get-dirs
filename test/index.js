@@ -22,4 +22,13 @@ test('get-dirs', t => {
     t.end()
   })
 
+  t.test('it will throw an error if root directory does not exist', t => {
+    try {
+      getDirs('./this_folder_does_not_exist')
+    } catch(ex) {
+      t.equal(ex.code, 'ENOENT')
+    }
+    t.end()
+  })
+
 })
