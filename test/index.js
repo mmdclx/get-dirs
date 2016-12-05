@@ -17,4 +17,9 @@ test('get-dirs', t => {
     t.end()
   })
 
+  t.test('it will throw an error if no root directory is given', t => {
+    t.throws(getDirs, Error)
+    t.end()
+  })
+
 })
