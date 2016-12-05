@@ -1,0 +1,31 @@
+{
+  "name": "get-dirs",
+  "version": "1.0.0",
+  "description": "npm package to recursively get all directories and subdirectories of a path. Allows for exclusions (eg 'node_modules')",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/index.js | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/zlot/get-dirs.git"
+  },
+  "keywords": [
+    "list",
+    "directories",
+    "dir",
+    "dirs",
+    "recursive",
+    "subdirs",
+    "subdirectories",
+    "folders",
+    "subfolders",
+    "recursively"
+  ],
+  "author": "Mark C Mitchell <mark@markcmitchell.net> (http://markcmitchell.net)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zlot/get-dirs/issues"
+  },
+  "homepage": "https://github.com/zlot/get-dirs#readme"
+}
