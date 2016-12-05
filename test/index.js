@@ -58,7 +58,7 @@ test('get-dirs', t => {
     fs.mkdirSync(`${testDir}/.secretFolder`)
     fs.mkdirSync(`${testDir}/test.folder`)
 
-    const exclude = [new RegExp('\/\.')]
+    const exclude = [new RegExp('\/\\.')] // match /.dotFolders, nothing else
     const dirs = getDirs(testDir, exclude)
     t.deepEqual(dirs, [
       `${testDir}/folderA`,
