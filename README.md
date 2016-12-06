@@ -2,7 +2,7 @@
 Given a root directory, get-dirs will synchronously return an array with
 all sub-directories.
 
-Allows for exclusions of strings to match, or RegExp objects. See usage.
+Allows for exclusions: strings to match, or RegExp instances. See usage.
 
 ## Usage
 ```javascript
@@ -11,7 +11,7 @@ const getDirs = require('get-dirs')
 const matchDotFolders = /^\.\w+|\/\./ // RegExp to exclude any root or nested .dotFolders/
 const exclusions = ['node_modules', matchDotFolders]
 
-const dirs = getDirs(__dirname, exclusions)  // exclusions is an optional arg
+const dirs = getDirs(__dirname, exclusions)  // exclusions is optional
 
 console.log(dirs)
 ```
