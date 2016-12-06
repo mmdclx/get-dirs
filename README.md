@@ -1,8 +1,8 @@
 # get-dirs
+Given a root directory, get-dirs will synchronously return an array with
+all sub-directories.
 
-get-dirs is an npm package to recursively get all directories and subdirectories of a path. Allows for exclusions (eg 'node_modules').
-
-get-dirs will synchronously gather all sub-directories, and return an array.
+Allows for exclusions of strings to match, or RegExp objects. See usage.
 
 ## Usage
 ```javascript
@@ -23,6 +23,6 @@ module will claim that the RegExp is not actually an `instanceof RegExp`. I don'
 but it will work fine run inside a `js` file. If anyone knows why please feel free to enlighten me.
 
 ## Run unit tests
-```bash
+```sh
 $ npm test
 ```
