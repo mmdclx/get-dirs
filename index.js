@@ -43,13 +43,13 @@ module.exports = function getDirs(rootDir, exclude, cb) {
   let asyncCounter = 0
 
   function readDir(dir, complete) {
+
     asyncCounter++
 
     fs.readdir(dir, (err, files) => {
       if(err) {
         if(err.code === 'EACCES') {
           console.error('Permission denied for dir: "' + err.path + '". Try running again with sudo')
-          throw err
         }
       }
       files.map(file => {
