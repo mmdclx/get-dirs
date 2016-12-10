@@ -39,3 +39,7 @@ tape.test('it will throw an error if no root directory is given', t => {
   t.end()
 })
 
+tape.test('it will throw an error if no callback for stream.Readable is given', t => {
+  t.throws(getDirs.bind(null, './'), /Please provide a callback function that takes a stream.Readable/)
+  t.end()
+})
