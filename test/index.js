@@ -49,3 +49,37 @@ tape.test('it will throw an error if root directory does not exist', t => {
     getDirs.bind(null, './this_folder_does_not_exist', readableStream => {}), /ENOENT/)
   t.end()
 })
+
+tape.test('it will ignore any directories that match the strings passed to the exclude arg', t => {
+
+  getDirs(testDir, ['folderAA'], readableStream => {
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [
+          Buffer.from(`${testDir}/folderA`),
+          Buffer.from(`${testDir}/folderB`)
+        ])
+      })
+    )
+  })
+
+  getDirs(testDir, ['folderAA', 'folderB'], readableStream => {
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [
+          Buffer.from(`${testDir}/folderA`)
+        ])
+      })
+    )
+  })
+
+  getDirs(testDir, ['fold'], readableStream => {
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [])
+      })
+    )
+  })
+
+  t.end()
+})
