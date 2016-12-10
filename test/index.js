@@ -43,3 +43,9 @@ tape.test('it will throw an error if no callback for stream.Readable is given', 
   t.throws(getDirs.bind(null, './'), /Please provide a callback function that takes a stream.Readable/)
   t.end()
 })
+
+tape.test('it will throw an error if root directory does not exist', t => {
+  t.throws(
+    getDirs.bind(null, './this_folder_does_not_exist', readableStream => {}), /ENOENT/)
+  t.end()
+})
