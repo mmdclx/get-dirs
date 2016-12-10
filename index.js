@@ -7,6 +7,9 @@ module.exports = function getDirs(rootDir, exclude, cb) {
   if(isUndefined(rootDir)) {
     throw new Error('Please provide a root directory.')
   }
+  // check if rootDir exists. Will throw ENOENT error
+  fs.accessSync(rootDir)
+
   if(!isUndefined(exclude)) {
     if(typeof exclude === 'function') { // if cb is passed in as 2nd argument
       cb = exclude
