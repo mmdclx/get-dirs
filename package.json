@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/zlot/get-dirs#readme",
   "devDependencies": {
+    "callback-stream": "^1.1.0",
     "faucet": "0.0.1",
     "tape": "^4.6.3"
   }
