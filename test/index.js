@@ -1,18 +1,26 @@
-const test = require('tape')
+const tape = require('tape')
 const fs = require('fs')
+const stream = require('stream')
+const callbackStream = require('callback-stream')
 const getDirs = require('../index')
 
 const testDir = __dirname + '/testDirectory'
 
-test.test('it will return, in an array, only directories', t => {
-  const dirs = getDirs(testDir)
+tape.test('it will return a stream.Readable which will stream found directories', t => {
+  const dirs = getDirs(testDir, readableStream => {
+    t.true(readableStream instanceof stream.Readable)
 
-  t.deepEqual(dirs, [
-    `${testDir}/folderA`,
-    `${testDir}/folderA/folderAA`,
-    `${testDir}/folderB`
-  ])
-  t.end()
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [
+          Buffer.from(`${testDir}/folderA`),
+          Buffer.from(`${testDir}/folderB`),
+          Buffer.from(`${testDir}/folderA/folderAA`),
+        ])
+        t.end()
+      })
+    )
+  })
 })
 
 test.test('it will throw an error if no root directory is given', t => {
