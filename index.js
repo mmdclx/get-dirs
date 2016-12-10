@@ -8,18 +8,24 @@ module.exports = function getDirs(rootDir, exclude, cb) {
     throw new Error('Please provide a root directory.')
   }
   if(!isUndefined(exclude)) {
-    if(!Array.isArray(exclude)) {
+    if(typeof exclude === 'function') { // if cb is passed in as 2nd argument
+      cb = exclude
+      exclude = []
+    }
+    else if(!Array.isArray(exclude)) {
       throw new Error('exclude arg must be an array of strings to exclude from output')
     }
-    exclude = exclude.map(v => {
-      if(typeof v === 'string') {
-        return new RegExp(v, 'i')
-      } else if(v instanceof RegExp) {
-        return v
-      } else {
-        throw new Error('Only strings or RegExp objects are allowed in exclude array. There is a problem with value: ' + v + ', which is an instance of: ' + Object.getPrototypeOf(v))
-      }
-    })
+    else {
+      exclude = exclude.map(v => {
+        if(typeof v === 'string') {
+          return new RegExp(v, 'i')
+        } else if(v instanceof RegExp) {
+          return v
+        } else {
+          throw new Error('Only strings or RegExp objects are allowed in exclude array. There is a problem with value: ' + v + ', which is an instance of: ' + Object.getPrototypeOf(v))
+        }
+      })
+    }
   }
 
   class DirReadable extends stream.Readable {
