@@ -27,6 +27,9 @@ module.exports = function getDirs(rootDir, exclude, cb) {
       })
     }
   }
+  if(isUndefined(cb)) {
+    throw new Error('Please provide a callback function that takes a stream.Readable')
+  }
 
   class DirReadable extends stream.Readable {
     constructor(options) {
