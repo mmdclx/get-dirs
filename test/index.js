@@ -33,3 +33,9 @@ tape.test('the stream.Readable will dispatch end event when directory listing is
     })
   })
 })
+
+tape.test('it will throw an error if no root directory is given', t => {
+  t.throws(getDirs, /Please provide a root directory/)
+  t.end()
+})
+
