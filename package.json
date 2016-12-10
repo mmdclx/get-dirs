@@ -1,6 +1,6 @@
 {
   "name": "get-dirs",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "npm package to recursively get all directories and subdirectories of a path. Allows for exclusions (eg 'node_modules')",
   "main": "index.js",
   "scripts": {
