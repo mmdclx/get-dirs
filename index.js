@@ -1,7 +1,8 @@
 const fs = require('fs')
 const path = require('path')
+const stream = require('stream')
 
-module.exports = function getDirs(rootDir, exclude) {
+module.exports = function getDirs(rootDir, exclude, cb) {
 
   if(isUndefined(rootDir)) {
     throw new Error('Please provide a root directory.')
@@ -21,35 +22,64 @@ module.exports = function getDirs(rootDir, exclude) {
     })
   }
 
-  let dirs = [];
+  class DirReadable extends stream.Readable {
+    constructor(options) {
+      super(options)
+    }
+    _read(size) {}
+  }
 
-  (function readDir(dir) {
-    let files = fs.readdirSync(dir)
+  const readableStream = new DirReadable({
+    encoding: 'utf-8'
+  })
 
-    files.map(file => {
-      return path.join(dir, file)
-    }).filter(file => {
-      try {
-        let toExclude = false
-        if(!isUndefined(exclude)) {
-          toExclude = exclude.some(currVal => {
-            let result = file.search(currVal)
-            return result >= 0
-          })
+  // Keep track of recursive calls, so complete() can be called
+  let asyncCounter = 0
+
+  function readDir(dir, complete) {
+    asyncCounter++
+
+    fs.readdir(dir, (err, files) => {
+      if(err) {
+        if(err.code === 'EACCES') {
+          console.error('Permission denied for dir: "' + err.path + '". Try running again with sudo')
+          throw err
         }
-        if(fs.statSync(file).isDirectory() && !toExclude) {
-          return true
-        }
-      } catch(ex) {
-        return false
       }
-    }).forEach(foundDir => {
-      dirs.push(foundDir)
-      readDir(foundDir)
-    })
-  })(rootDir)
+      files.map(file => {
+        return path.join(dir, file)
+      }).filter(file => {
+        try {
+          let toExclude = false
+          if(!isUndefined(exclude)) {
+            toExclude = exclude.some(currVal => {
+              let result = file.search(currVal)
+              return result >= 0
+            })
+          }
+          if(fs.statSync(file).isDirectory() && !toExclude) {
+            return true
+          }
+        } catch(ex) {
+          return false
+        }
+      }).forEach(foundDir => {
+        readableStream.push(foundDir)
+        readDir(foundDir, complete)
+      })
 
-  return dirs
+      asyncCounter--
+
+      if(asyncCounter === 0)
+        complete()
+    })
+  }
+
+  readDir(rootDir, function complete() {
+    readableStream.push(null)
+  })
+
+  cb(readableStream)
 }
 
 function isUndefined(v) {
