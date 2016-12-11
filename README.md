@@ -1,19 +1,26 @@
 # get-dirs
-Given a root directory, get-dirs will synchronously return an array with
+Given a root directory, get-dirs will return a readable Stream that will push
 all sub-directories.
 
 Allows for exclusions: strings to match, or RegExp instances. See usage.
 
 ## Usage
+
 ```javascript
 const getDirs = require('get-dirs')
 
 const matchDotFolders = /^\.\w+|\/\./ // RegExp to exclude any root or nested .dotFolders/
-const exclusions = ['node_modules', matchDotFolders]
+const exclusions = ['node_modules', matchDotFolders] // exclusions are optional
 
-const dirs = getDirs(__dirname, exclusions)  // exclusions is optional
-
-console.log(dirs)
+getDirs(__dirname, exclusions, readableStream => {
+  readableStream
+    .on('data', dir => {
+      console.log(dir)
+    })
+    .on('end', () => {
+      console.log('Listing of directories completed.')
+    })
+})
 ```
 
 Tested on Mac OSX only so far.
