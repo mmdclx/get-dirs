@@ -1,7 +1,7 @@
 {
   "name": "get-dirs",
   "version": "2.2.0",
-  "description": "npm package to recursively get all directories and subdirectories of a path. Allows for exclusions (eg 'node_modules')",
+  "description": "npm package to recursively get all directories and subdirectories of a path via a readable Stream. Allows for exclusions (eg 'node_modules')",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./test/index.js -x 'npm test'",
