@@ -83,3 +83,25 @@ tape.test('it will ignore any directories that match the strings passed to the e
 
   t.end()
 })
+
+tape.test('it will ignore any directories that match a passed-in RegEx object', t => {
+  fs.mkdirSync(`${testDir}/.secretFolder`)
+  fs.mkdirSync(`${testDir}/test.folder`)
+
+  const exclude = [/^\.\w+|\/\./] // match any root or nested /.dotFolders, nothing else
+  getDirs(testDir, exclude, readableStream => {
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [
+          Buffer.from(`${testDir}/folderA`),
+          Buffer.from(`${testDir}/folderB`),
+          Buffer.from(`${testDir}/test.folder`),
+          Buffer.from(`${testDir}/folderA/folderAA`),
+        ])
+        fs.rmdirSync(`${testDir}/.secretFolder`)
+        fs.rmdirSync(`${testDir}/test.folder`)
+        t.end()
+      })
+    )
+  })
+})
