@@ -7,7 +7,7 @@ const getDirs = require('../index')
 const testDir = __dirname + '/testDirectory'
 
 tape.test('it will return a stream.Readable which will stream found directories', t => {
-  const dirs = getDirs(testDir, readableStream => {
+  const dirs = getDirs(testDir, [], readableStream => {
     t.true(readableStream instanceof stream.Readable)
 
     readableStream.pipe(
@@ -24,7 +24,7 @@ tape.test('it will return a stream.Readable which will stream found directories'
 })
 
 tape.test('the stream.Readable will dispatch end event when directory listing is finished', t => {
-  const dirs = getDirs(testDir, readableStream => {
+  const dirs = getDirs(testDir, [], readableStream => {
     readableStream.on('data', buffer => {}) // required to flow stream
 
     readableStream.on('end', () => {
@@ -110,4 +110,19 @@ tape.test('it will throw an error if something other than a string or RegEx is p
   const exclude = [1, 2, 3]
   t.throws(getDirs.bind(null, testDir, exclude, readableStream => {}), /Only strings or RegExp objects are allowed in exclude array/)
   t.end()
+})
+
+tape.test('callback function is allowed to be passed as second argument', t => {
+  getDirs(testDir, readableStream => {
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [
+          Buffer.from(`${testDir}/folderA`),
+          Buffer.from(`${testDir}/folderB`),
+          Buffer.from(`${testDir}/folderA/folderAA`),
+        ])
+        t.end()
+      })
+    )
+  })
 })
