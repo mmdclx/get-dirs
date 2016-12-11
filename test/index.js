@@ -105,3 +105,9 @@ tape.test('it will ignore any directories that match a passed-in RegEx object', 
     )
   })
 })
+
+tape.test('it will throw an error if something other than a string or RegEx is passed into exclusion array', t => {
+  const exclude = [1, 2, 3]
+  t.throws(getDirs.bind(null, testDir, exclude, readableStream => {}), /Only strings or RegExp objects are allowed in exclude array/)
+  t.end()
+})
