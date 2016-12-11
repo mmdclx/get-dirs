@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const stream = require('stream')
 
-module.exports = function getDirs(rootDir, exclude, cb) {
+module.exports = function getDirs(rootDir, exclude = [], cb) {
 
   if(isUndefined(rootDir)) {
     throw new Error('Please provide a root directory.')
@@ -63,12 +63,10 @@ module.exports = function getDirs(rootDir, exclude, cb) {
       }).filter(file => {
         try {
           let toExclude = false
-          if(!isUndefined(exclude)) {
-            toExclude = exclude.some(currVal => {
-              let result = file.search(currVal)
-              return result >= 0
-            })
-          }
+          toExclude = exclude.some(currVal => {
+            let result = file.search(currVal)
+            return result >= 0
+          })
           if(fs.statSync(file).isDirectory() && !toExclude) {
             return true
           }
