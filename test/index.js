@@ -126,3 +126,42 @@ tape.test('callback function is allowed to be passed as second argument', t => {
     )
   })
 })
+
+tape.test('exclude string matching is case insensitive', t => {
+  getDirs(testDir, ['FOLDERAA'], readableStream => {
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [
+          Buffer.from(`${testDir}/folderA`),
+          Buffer.from(`${testDir}/folderB`)
+        ])
+        t.end()
+      })
+    )
+  })
+})
+
+tape.test('it will ignore files and only list directories', t => {
+  fs.writeFileSync(`${testDir}/tempFile.txt`, 'temp')
+  fs.writeFileSync(`${testDir}/folderA/temp.txt`, 'temp')
+
+  getDirs(testDir, [], readableStream => {
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [
+          Buffer.from(`${testDir}/folderA`),
+          Buffer.from(`${testDir}/folderB`),
+          Buffer.from(`${testDir}/folderA/folderAA`),
+        ])
+        fs.unlinkSync(`${testDir}/tempFile.txt`)
+        fs.unlinkSync(`${testDir}/folderA/temp.txt`)
+        t.end()
+      })
+    )
+  })
+})
+
+tape.test('it will throw an error if exclude is not an array', t => {
+  t.throws(getDirs.bind(null, testDir, null, readableStream => {}), /exclude arg must be an array/)
+  t.end()
+})
