@@ -1,8 +1,10 @@
 # get-dirs
-Given a root directory, get-dirs will return a readable Stream that will push
-all sub-directories.
+`get-dirs` 🌳 is a tiny helper for Node.js that walks your directory tree and
+📂 streams each folder it finds. Pass the starting path and receive a
+`Readable` stream of absolute directory paths.
 
-Allows for exclusions: strings to match, or RegExp instances. See usage.
+You can also 🚫 skip folders by passing an array of patterns. Each pattern may
+be a plain string or a `RegExp`. See the example below.
 
 ## Usage
 
