@@ -1,10 +1,9 @@
 # get-dirs
-`get-dirs` 🌳 is a tiny helper for Node.js that walks your directory tree and
-📂 streams each folder it finds. Pass the starting path and receive a
-`Readable` stream of absolute directory paths.
+`get-dirs` 🌳 recursively walks a directory and returns a Node.js `Readable`
+stream of absolute folder paths. Supply a starting path and optionally pass an
+array of patterns to 🚫 skip directories using strings or `RegExp`s.
 
-You can also 🚫 skip folders by passing an array of patterns. Each pattern may
-be a plain string or a `RegExp`. See the example below.
+See the example below for details.
 
 ## Usage
 
