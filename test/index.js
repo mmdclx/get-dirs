@@ -126,3 +126,19 @@ tape.test('callback function is allowed to be passed as second argument', t => {
     )
   })
 })
+
+tape.test('it accepts RegExp objects created in another context', t => {
+  const vm = require('vm')
+  const regex = vm.runInNewContext('/folderB/')
+  getDirs(testDir, [regex], readableStream => {
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [
+          Buffer.from(`${testDir}/folderA`),
+          Buffer.from(`${testDir}/folderA/folderAA`),
+        ])
+        t.end()
+      })
+    )
+  })
+})

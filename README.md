@@ -25,9 +25,11 @@ getDirs(__dirname, exclusions, readableStream => {
 
 Tested on Mac OSX only so far.
 
-**note**: running the above example in the node REPL will cause an error — the `get-dirs`
-module will claim that the RegExp is not actually an `instanceof RegExp`. I don't know why,
-but it will work fine run inside a `js` file. If anyone knows why please feel free to enlighten me.
+**note**: prior versions of this package used `instanceof RegExp` to validate the
+`exclude` argument. In some versions of the Node REPL each expression is
+evaluated in its own context, so a `RegExp` created there would fail the check.
+The library now performs a context-agnostic test, so the example works in the
+REPL as well as in a script.
 
 ## Run unit tests
 ```sh
