@@ -22,7 +22,7 @@ module.exports = function getDirs(rootDir, exclude = [], cb) {
       exclude = exclude.map(v => {
         if(typeof v === 'string') {
           return new RegExp(v, 'i')
-        } else if(v instanceof RegExp) {
+        } else if(isRegExp(v)) {
           return v
         } else {
           throw new Error('Only strings or RegExp objects are allowed in exclude array. There is a problem with value: ' + v + ', which is an instance of: ' + Object.getPrototypeOf(v))
@@ -94,4 +94,8 @@ module.exports = function getDirs(rootDir, exclude = [], cb) {
 
 function isUndefined(v) {
   return typeof v === 'undefined'
+}
+
+function isRegExp(v) {
+  return Object.prototype.toString.call(v) === '[object RegExp]'
 }
