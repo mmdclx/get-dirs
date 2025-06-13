@@ -1,7 +1,7 @@
 {
   "name": "get-dirs",
   "version": "2.2.0",
-  "description": "npm package to recursively get all directories and subdirectories of a path via a readable Stream. Allows for exclusions (eg 'node_modules')",
+  "description": "Recursively get all directories and subdirectories of a path via a readable Stream. Allows for exclusions (eg 'node_modules')",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./test/index.js -x 'npm test'",
@@ -23,12 +23,7 @@
     "subfolders",
     "recursively"
   ],
-  "author": "Mark C Mitchell <mark@markcmitchell.net> (http://markcmitchell.net)",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zlot/get-dirs/issues"
-  },
-  "homepage": "https://github.com/zlot/get-dirs#readme",
   "devDependencies": {
     "callback-stream": "^1.1.0",
     "faucet": "0.0.1",
