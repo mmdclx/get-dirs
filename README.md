@@ -34,11 +34,6 @@ getDirs('./test/testDirectory', ['folderB'], stream => {
 
 The library is tested automatically on macOS, Windows and Linux via GitHub Actions.
 
-**note**: prior versions of this package used `instanceof RegExp` to validate the
-`exclude` argument. In some versions of the Node REPL each expression is
-evaluated in its own context, so a `RegExp` created there would fail the check.
-The library now performs a context-agnostic test, so the example works in the
-REPL as well as in a script.
 
 ## Run unit tests
 ```sh
