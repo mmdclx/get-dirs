@@ -32,7 +32,7 @@ getDirs('./test/testDirectory', ['folderB'], stream => {
 })
 ```
 
-Tested on Mac OSX only so far.
+The library is tested automatically on macOS, Windows and Linux via GitHub Actions.
 
 **note**: prior versions of this package used `instanceof RegExp` to validate the
 `exclude` argument. In some versions of the Node REPL each expression is
