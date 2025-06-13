@@ -142,3 +142,39 @@ tape.test('it accepts RegExp objects created in another context', t => {
     )
   })
 })
+
+tape.test('exclude strings are matched case-insensitively', t => {
+  getDirs(testDir, ['FOLDERAA'], readableStream => {
+    readableStream.pipe(
+      callbackStream((err, dirs) => {
+        t.deepEqual(dirs, [
+          Buffer.from(`${testDir}/folderA`),
+          Buffer.from(`${testDir}/folderB`)
+        ])
+        t.end()
+      })
+    )
+  })
+})
+
+tape.test('exclude argument must be an array when provided', t => {
+  t.throws(
+    getDirs.bind(null, testDir, null, () => {}),
+    /exclude arg must be an array/
+  )
+  t.end()
+})
+
+tape.test('stream handles directory with no subdirectories', t => {
+  const emptyDir = `${testDir}/empty`
+  fs.mkdirSync(emptyDir)
+  getDirs(emptyDir, [], readableStream => {
+    const dirs = []
+    readableStream.on('data', d => dirs.push(d))
+    readableStream.on('end', () => {
+      t.deepEqual(dirs, [])
+      fs.rmdirSync(emptyDir)
+      t.end()
+    })
+  })
+})
