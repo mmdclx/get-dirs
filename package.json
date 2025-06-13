@@ -1,6 +1,6 @@
 {
   "name": "get-dirs",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Recursively get all directories and subdirectories of a path via a readable Stream. Allows for exclusions (eg 'node_modules')",
   "main": "index.js",
   "scripts": {
